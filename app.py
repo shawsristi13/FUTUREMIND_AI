@@ -15,7 +15,27 @@ st.set_page_config(
     page_icon="🧠",
     layout="wide"
 )
+# Hide GitHub button but keep mobile sidebar
+st.markdown("""
+<style>
 
+/* Hide GitHub icon only */
+a[href*="github.com"] {
+    display: none !important;
+}
+
+/* Hide Streamlit menu (three dots) */
+#MainMenu {
+    visibility: hidden;
+}
+
+/* Hide footer */
+footer {
+    visibility: hidden;
+}
+
+</style>
+""", unsafe_allow_html=True)
 # ==========================================
 # CUSTOM CSS STYLING
 # ==========================================
