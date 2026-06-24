@@ -15,7 +15,14 @@ st.set_page_config(
     page_icon="🧠",
     layout="wide"
 )
-
+# Hide Streamlit top toolbar
+st.markdown("""
+<style>
+[data-testid="stToolbar"] {
+    display: none;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ==========================================
 # CUSTOM CSS STYLING
