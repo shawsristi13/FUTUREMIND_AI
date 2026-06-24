@@ -1,4 +1,4 @@
-from utils.gemini_api import get_gemini_response
+from utils.gemini_api import get_ai_response
 
 
 def generate_interview(role, experience_level):
@@ -24,6 +24,6 @@ def generate_interview(role, experience_level):
     Make the questions practical, realistic, and suitable for the candidate's experience level.
     """
 
-    interview = get_gemini_response(prompt)
+    interview = get_ai_response(prompt)
 
     return interview

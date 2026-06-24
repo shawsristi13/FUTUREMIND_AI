@@ -1,5 +1,5 @@
 import json
-from utils.gemini_api import get_gemini_response
+from utils.gemini_api import get_ai_response
 
 
 def generate_quiz(topic, difficulty, number_of_questions):
@@ -31,7 +31,7 @@ def generate_quiz(topic, difficulty, number_of_questions):
     ]
     """
 
-    response = get_gemini_response(prompt)
+    response = get_ai_response(prompt)
 
     # Remove possible markdown formatting
     response = response.replace("```json", "")

@@ -1,4 +1,4 @@
-from utils.gemini_api import get_gemini_response
+from utils.gemini_api import get_ai_response
 
 
 def analyze_skill_gap(career_goal, current_skills):
@@ -25,6 +25,6 @@ def analyze_skill_gap(career_goal, current_skills):
     Make your answer practical, motivating, and easy to understand.
     """
 
-    analysis = get_gemini_response(prompt)
+    analysis = get_ai_response(prompt)
 
     return analysis

@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.gemini_api import get_gemini_response
+from utils.gemini_api import get_ai_response
 from modules.quiz import generate_quiz
 from modules.career import generate_career_roadmap
 from modules.skill_gap import analyze_skill_gap
@@ -172,7 +172,7 @@ Choose any feature from the sidebar and start learning with AI.
         """
     )
     # ==========================================
-# AI STUDY TUTOR
+# AI STUDY TUTOR v1.1 (ChatGPT Style)
 # ==========================================
 
 elif feature == "📚 AI Study Tutor":
@@ -180,40 +180,73 @@ elif feature == "📚 AI Study Tutor":
     st.title("📚 AI Study Tutor")
 
     st.markdown("""
-Ask any academic question and receive a simple,
-easy-to-understand explanation powered by AI.
+Welcome to your AI Study Assistant! 🤖
+
+Ask any academic question and continue the conversation naturally.
+Your chat history will remain available during your session.
 """)
 
-    question = st.text_area(
-        "Enter your question:",
-        placeholder="Example: Explain Newton's Laws of Motion in simple words"
+    # Create chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # Display previous messages
+    for message in st.session_state.messages:
+
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+
+    # User input
+    prompt = st.chat_input(
+        "Ask your study question here..."
     )
 
-    if st.button("🧠 Ask AI"):
 
-        if question.strip():
+    # When user sends a message
+    if prompt:
+
+        # Show user message
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # Save user message
+        st.session_state.messages.append(
+            {
+                "role": "user",
+                "content": prompt
+            }
+        )
+
+
+        # Generate AI response
+        with st.chat_message("assistant"):
 
             with st.spinner(
-                "🧠 FUTUREMIND AI is thinking and preparing your answer..."
+                "🧠 FUTUREMIND AI is thinking..."
             ):
 
-                answer = get_gemini_response(question)
+                answer = get_ai_response(st.session_state.messages)
+                st.markdown(answer)
 
-            if "⚠️" in answer:
-                st.error(answer)
 
-            else:
-                st.success("✅ Answer generated successfully!")
+        # Save AI response
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": answer
+            }
+        )
 
-                st.markdown("### 📖 Explanation")
 
-                st.write(answer)
+    # Clear conversation button
+    st.markdown("---")
 
-        else:
+    if st.button("🗑️ Clear Chat"):
 
-            st.warning(
-                "⚠️ Please enter a question before asking AI."
-            )
+        st.session_state.messages = []
+
+        st.rerun()
             # ==========================================
 # SMART QUIZ GENERATOR
 # ==========================================

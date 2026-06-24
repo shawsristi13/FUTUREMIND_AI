@@ -1,5 +1,4 @@
-from utils.gemini_api import get_gemini_response
-
+from utils.gemini_api import get_ai_response
 
 def generate_career_roadmap(goal, current_level):
     prompt = f"""
@@ -27,6 +26,6 @@ def generate_career_roadmap(goal, current_level):
     and well formatted with headings and bullet points.
     """
 
-    roadmap = get_gemini_response(prompt)
+    roadmap = get_ai_response(prompt)
 
     return roadmap
