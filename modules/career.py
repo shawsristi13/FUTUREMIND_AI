@@ -1,4 +1,4 @@
-from utils.gemini_api import get_ai_response
+from utils.ai_service import get_ai_response
 
 def generate_career_roadmap(goal, current_level):
     prompt = f"""

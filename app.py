@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.gemini_api import get_ai_response
+from utils.ai_service import get_ai_response
 from modules.quiz import generate_quiz
 from modules.career import generate_career_roadmap
 from modules.skill_gap import analyze_skill_gap

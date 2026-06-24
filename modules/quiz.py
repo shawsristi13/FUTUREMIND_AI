@@ -1,5 +1,5 @@
 import json
-from utils.gemini_api import get_ai_response
+from utils.ai_service import get_ai_response
 
 
 def generate_quiz(topic, difficulty, number_of_questions):
