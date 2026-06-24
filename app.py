@@ -15,22 +15,27 @@ st.set_page_config(
     page_icon="🧠",
     layout="wide"
 )
-# Hide GitHub button but keep mobile sidebar
 st.markdown("""
 <style>
 
-/* Hide GitHub icon only */
-a[href*="github.com"] {
+/* Hide GitHub Fork button */
+[data-testid="stAppViewContainer"] a[href*="github.com"] {
     display: none !important;
 }
 
-/* Hide Streamlit menu (three dots) */
-#MainMenu {
+/* Hide Streamlit "Fork" text */
+[data-testid="stToolbar"] {
+    visibility: hidden !important;
+    height: 0px !important;
+}
+
+/* Hide Streamlit footer */
+footer {
     visibility: hidden;
 }
 
-/* Hide footer */
-footer {
+/* Hide Main Menu */
+#MainMenu {
     visibility: hidden;
 }
 
