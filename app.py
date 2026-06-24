@@ -18,24 +18,18 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Hide GitHub Fork button */
-[data-testid="stAppViewContainer"] a[href*="github.com"] {
+/* Try to hide GitHub links only */
+a[href*="github.com"] {
     display: none !important;
 }
 
-/* Hide Streamlit "Fork" text */
-[data-testid="stToolbar"] {
-    visibility: hidden !important;
-    height: 0px !important;
-}
-
-/* Hide Streamlit footer */
-footer {
+/* Hide Streamlit menu */
+#MainMenu {
     visibility: hidden;
 }
 
-/* Hide Main Menu */
-#MainMenu {
+/* Hide footer */
+footer {
     visibility: hidden;
 }
 
