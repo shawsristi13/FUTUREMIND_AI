@@ -4,6 +4,7 @@ from modules.quiz import generate_quiz
 from modules.career import generate_career_roadmap
 from modules.skill_gap import analyze_skill_gap
 from modules.interview import generate_interview
+from utils.pdf_export import create_pdf
 
 
 # ==========================================
@@ -226,7 +227,17 @@ Your chat history will remain available during your session.
 
                 answer = get_ai_response(st.session_state.messages)
                 st.markdown(answer)
+                pdf_file = create_pdf(
+                    "FUTUREMIND AI Study Tutor",
+                    answer
+                )
 
+                st.download_button(
+                    "📄 Download PDF",
+                    data=pdf_file,
+                    file_name="study_answer.pdf",
+                    mime="application/pdf"
+                )
 
         # Save AI response
         st.session_state.messages.append(
@@ -499,9 +510,22 @@ Get a personalized step-by-step roadmap to achieve your dream career.
                     "🎉 Your career roadmap is ready!"
                 )
 
+                
                 st.markdown("## 🗺️ Your Roadmap")
 
                 st.write(roadmap)
+
+                pdf_file = create_pdf(
+                    "Career Roadmap",
+                    roadmap
+                )
+
+                st.download_button(
+                    "📄 Download Roadmap PDF",
+                    data=pdf_file,
+                    file_name="career_roadmap.pdf",
+                    mime="application/pdf"
+                )
 
         else:
 
@@ -563,6 +587,18 @@ Analyze your current skills and discover what you need to learn next.
                 st.markdown("## 📚 Your Improvement Plan")
 
                 st.write(analysis)
+
+                pdf_file = create_pdf(
+                    "Skill Gap Analysis",
+                    analysis
+                )
+
+                st.download_button(
+                    "📄 Download Analysis PDF",
+                    data=pdf_file,
+                    file_name="skill_gap_analysis.pdf",
+                    mime="application/pdf"
+                )
 
         else:
 
@@ -626,11 +662,21 @@ Practice realistic interview questions and improve your confidence.
                     "🎉 Your interview questions are ready!"
                 )
 
-                st.markdown(
-                    "## 💼 Practice Questions"
-                )
+                st.markdown("## 💼 Practice Questions")
 
                 st.write(interview)
+
+                pdf_file = create_pdf(
+                    "Mock Interview Questions",
+                    interview
+                )
+
+                st.download_button(
+                    "📄 Download Interview PDF",
+                    data=pdf_file,
+                    file_name="mock_interview.pdf",
+                    mime="application/pdf"
+                )
 
         else:
 
