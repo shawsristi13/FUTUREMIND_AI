@@ -5,6 +5,10 @@ from modules.career import generate_career_roadmap
 from modules.skill_gap import analyze_skill_gap
 from modules.interview import generate_interview
 from utils.pdf_export import create_pdf
+from utils.analytics import (
+    increment_counter,
+    get_analytics
+)
 
 
 # ==========================================
@@ -87,7 +91,8 @@ feature = st.sidebar.selectbox(
         "📝 Smart Quiz Generator",
         "🚀 Career Roadmap",
         "📊 Skill Gap Analyzer",
-        "🎤 AI Mock Interview"
+        "🎤 AI Mock Interview",
+        "📊 Analytics Dashboard",
     ],
     index=[
         "🏠 Home",
@@ -95,7 +100,8 @@ feature = st.sidebar.selectbox(
         "📝 Smart Quiz Generator",
         "🚀 Career Roadmap",
         "📊 Skill Gap Analyzer",
-        "🎤 AI Mock Interview"
+        "🎤 AI Mock Interview",
+        "📊 Analytics Dashboard",
     ].index(st.session_state["feature"])
 )
 
@@ -226,6 +232,7 @@ Your chat history will remain available during your session.
             ):
 
                 answer = get_ai_response(st.session_state.messages)
+                increment_counter("tutor")
                 st.markdown(answer)
                 pdf_file = create_pdf(
                     "FUTUREMIND AI Study Tutor",
@@ -311,6 +318,7 @@ and track your performance.
                     difficulty,
                     number_of_questions
                 )
+                increment_counter("quiz")
 
         else:
 
@@ -498,6 +506,7 @@ Get a personalized step-by-step roadmap to achieve your dream career.
                     career_goal,
                     current_level
                 )
+                increment_counter("roadmap")
 
 
             if "⚠️" in roadmap:
@@ -572,6 +581,7 @@ Analyze your current skills and discover what you need to learn next.
                     target_career,
                     current_skills
                 )
+                increment_counter("skill_gap")
 
 
             if "⚠️" in analysis:
@@ -650,6 +660,7 @@ Practice realistic interview questions and improve your confidence.
                     job_role,
                     experience
                 )
+                increment_counter("interview")
 
 
             if "⚠️" in interview:
@@ -683,7 +694,60 @@ Practice realistic interview questions and improve your confidence.
             st.warning(
                 "⚠️ Please enter a job role."
             )
+# ==========================================
+# ANALYTICS DASHBOARD
+# ==========================================
 
+elif feature == "📊 Analytics Dashboard":
+
+    st.title("📊 FUTUREMIND AI Analytics")
+
+    data = get_analytics()
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.metric(
+            "📚 Tutor Questions",
+            data["tutor"]
+        )
+
+        st.metric(
+            "🚀 Roadmaps",
+            data["roadmap"]
+        )
+
+        st.metric(
+            "🎤 Interviews",
+            data["interview"]
+        )
+
+    with col2:
+
+        st.metric(
+            "📝 Quizzes",
+            data["quiz"]
+        )
+
+        st.metric(
+            "📊 Skill Analyses",
+            data["skill_gap"]
+        )
+
+    st.markdown("---")
+
+    total = (
+        data["tutor"]
+        + data["quiz"]
+        + data["roadmap"]
+        + data["skill_gap"]
+        + data["interview"]
+    )
+
+    st.success(
+        f"🚀 Total AI Tasks Generated: {total}"
+    )
 
 # ==========================================
 # FOOTER
