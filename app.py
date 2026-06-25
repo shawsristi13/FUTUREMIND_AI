@@ -75,6 +75,9 @@ st.sidebar.markdown("""
 ### Your AI Learning Partner
 """)
 
+if "feature" not in st.session_state:
+    st.session_state["feature"] = "🏠 Home"
+
 feature = st.sidebar.selectbox(
     "🚀 Explore Features",
     [
@@ -84,8 +87,18 @@ feature = st.sidebar.selectbox(
         "🚀 Career Roadmap",
         "📊 Skill Gap Analyzer",
         "🎤 AI Mock Interview"
-    ]
+    ],
+    index=[
+        "🏠 Home",
+        "📚 AI Study Tutor",
+        "📝 Smart Quiz Generator",
+        "🚀 Career Roadmap",
+        "📊 Skill Gap Analyzer",
+        "🎤 AI Mock Interview"
+    ].index(st.session_state["feature"])
 )
+
+st.session_state["feature"] = feature
 
 st.sidebar.markdown("---")
 
@@ -107,82 +120,54 @@ if feature == "🏠 Home":
 
     st.title("🧠 FUTUREMIND AI")
 
-    st.subheader(
-        "Learn Smarter. Plan Better. Grow Faster."
-    )
+    st.subheader("Learn Smarter. Plan Better. Grow Faster.")
 
-    st.write(
-        """
+    st.write("""
 Your personal AI-powered study and career assistant designed to help students learn, practice, and prepare for their future.
-        """
-    )
+""")
 
     st.markdown("---")
-
 
     col1, col2 = st.columns(2)
 
-
     with col1:
 
-        st.info(
-            """
+        st.info("""
 ### 📚 AI Study Tutor
-
 Understand difficult concepts with simple AI explanations.
-            """
-        )
+""")
 
-
-        st.success(
-            """
+        st.success("""
 ### 📝 Smart Quiz Generator
-
 Generate interactive quizzes and test your knowledge.
-            """
-        )
+""")
 
-
-        st.warning(
-            """
+        st.warning("""
 ### 🚀 Career Roadmap
-
 Get a personalized path towards your dream career.
-            """
-        )
-
+""")
 
     with col2:
 
-        st.success(
-            """
+        st.success("""
 ### 📊 Skill Gap Analyzer
-
 Discover missing skills and improve yourself.
-            """
-        )
+""")
 
-
-        st.info(
-            """
+        st.info("""
 ### 🎤 AI Mock Interview
-
 Practice realistic interview questions confidently.
-            """
-        )
-
+""")
 
     st.markdown("---")
 
-
-    st.markdown(
-        """
+    st.markdown("""
 ## 🚀 Begin Your Journey
 
-Choose any feature from the sidebar and start learning with AI.
-        """
-    )
-    # ==========================================
+Choose any feature from the sidebar or use quick access buttons below.
+""")
+
+# ==========================================
 # AI STUDY TUTOR v1.1 (ChatGPT Style)
 # ==========================================
 
