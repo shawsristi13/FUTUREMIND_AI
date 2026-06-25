@@ -161,11 +161,13 @@ Practice realistic interview questions confidently.
 
     st.markdown("---")
 
-    st.markdown("""
-## 🚀 Begin Your Journey
+    st.markdown(
+    """
+    ## 🚀 Begin Your Journey
 
-Choose any feature from the sidebar or use quick access buttons below.
-""")
+    Choose any feature from the sidebar and start learning with AI.
+        """
+    )
 
 # ==========================================
 # AI STUDY TUTOR v1.1 (ChatGPT Style)
