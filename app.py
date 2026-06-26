@@ -9,6 +9,7 @@ from utils.analytics import (
     increment_counter,
     get_analytics
 )
+from utils.study_tips import get_study_tip
 
 
 # ==========================================
@@ -47,26 +48,53 @@ footer {
 st.markdown("""
 <style>
 
+/* Main page */
 .main {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
 }
 
+/* Hide Streamlit menu */
+#MainMenu {
+    visibility: hidden;
+}
+
+/* Hide footer */
+footer {
+    visibility: hidden;
+}
+
+/* Headings */
 h1 {
     color: #4F46E5;
+    font-weight: 700;
 }
 
 h2, h3 {
     color: #4338CA;
 }
 
+/* Buttons */
 .stButton > button {
     width: 100%;
     border-radius: 12px;
-    height: 3em;
+    height: 3.2em;
+    font-size: 16px;
     font-weight: 600;
 }
 
+/* Metric cards */
+[data-testid="metric-container"] {
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #E5E7EB;
+}
 
+/* Reduce extra page spacing */
+.block-container {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
 
 </style>
 """, unsafe_allow_html=True)
@@ -126,6 +154,7 @@ Developed with ❤️ by **Sristi**
 if feature == "🏠 Home":
 
     st.title("🧠 FUTUREMIND AI")
+    data = get_analytics()
 
     st.subheader("Learn Smarter. Plan Better. Grow Faster.")
 
@@ -135,38 +164,26 @@ Your personal AI-powered study and career assistant designed to help students le
 
     st.markdown("---")
 
-    col1, col2 = st.columns(2)
+    st.subheader("📈 FUTUREMIND AI Statistics")
+
+    analytics = get_analytics()
+
+    col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-
-        st.info("""
-### 📚 AI Study Tutor
-Understand difficult concepts with simple AI explanations.
-""")
-
-        st.success("""
-### 📝 Smart Quiz Generator
-Generate interactive quizzes and test your knowledge.
-""")
-
-        st.warning("""
-### 🚀 Career Roadmap
-Get a personalized path towards your dream career.
-""")
+        st.metric("📚 Tutor", analytics["tutor"])
 
     with col2:
+        st.metric("📝 Quizzes", analytics["quiz"])
 
-        st.success("""
-### 📊 Skill Gap Analyzer
-Discover missing skills and improve yourself.
-""")
+    with col3:
+        st.metric("🚀 Roadmaps", analytics["roadmap"])
 
-        st.info("""
-### 🎤 AI Mock Interview
-Practice realistic interview questions confidently.
-""")
+    with col4:
+        st.metric("📊 Skills", analytics["skill_gap"])
 
-    st.markdown("---")
+    with col5:
+        st.metric("🎤 Interviews", analytics["interview"])
 
     st.markdown(
     """
@@ -175,9 +192,84 @@ Practice realistic interview questions confidently.
     Choose any feature from the sidebar and start learning with AI.
         """
     )
+    st.markdown("---")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button("📚 Open AI Study Tutor", use_container_width=True):
+            st.session_state["feature"] = "📚 AI Study Tutor"
+            st.rerun()
+
+        if st.button("🚀 Open Career Roadmap", use_container_width=True):
+            st.session_state["feature"] = "🚀 Career Roadmap"
+            st.rerun()
+
+        if st.button("📊 Open Skill Gap Analyzer", use_container_width=True):
+            st.session_state["feature"] = "📊 Skill Gap Analyzer"
+            st.rerun()
+
+    with col2:
+
+        if st.button("📝 Open Smart Quiz", use_container_width=True):
+            st.session_state["feature"] = "📝 Smart Quiz Generator"
+            st.rerun()
+
+        if st.button("🎤 Open Mock Interview", use_container_width=True):
+            st.session_state["feature"] = "🎤 AI Mock Interview"
+            st.rerun()
+
+        if st.button("📈 Open Analytics", use_container_width=True):
+            st.session_state["feature"] = "📈 Analytics Dashboard"
+            st.rerun()
+    st.markdown("---")
+
+    import random
+
+    st.info(get_study_tip())
+    st.markdown("---")
+
+    st.subheader("🌟 Why Choose FUTUREMIND AI?")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.success("""
+    ### ⚡ Fast AI
+
+    Instant responses for studying, quizzes, career planning and interviews.
+    """)
+
+    with c2:
+        st.info("""
+    ### 🎯 Personalized
+
+    Every response is customized according to your goals and learning level.
+    """)
+
+    with c3:
+        st.warning("""
+    ### 🚀 All-in-One
+
+    Study, Practice, Career Planning and Interview Preparation in one platform.
+    """)
+    st.markdown("---")
+
+    st.markdown(
+    """
+    > **"Success doesn't come from what you do occasionally. It comes from what you do consistently."**
+    """
+    )
+
+    st.caption("🧠 FUTUREMIND AI v1.3")
+
+    st.caption("Learn Smarter • Plan Better • Grow Faster")
+
+    st.caption("Developed with ❤️ by Sristi")
 
 # ==========================================
-# AI STUDY TUTOR v1.1 (ChatGPT Style)
+# AI STUDY TUTOR
 # ==========================================
 
 elif feature == "📚 AI Study Tutor":
@@ -195,27 +287,72 @@ Your chat history will remain available during your session.
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
+    # Suggested prompts
+    st.markdown("### 💡 Try asking:")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button("📘 Explain Newton's Laws"):
+            st.session_state.messages = [
+                {
+                    "role": "user",
+                    "content": "Explain Newton's Laws in simple language."
+                }
+            ]
+            st.rerun()
+
+        if st.button("🧮 Solve a Math Problem"):
+            st.session_state.messages = [
+                {
+                    "role": "user",
+                    "content": "Solve x² + 5x + 6 = 0 step by step."
+                }
+            ]
+            st.rerun()
+
+    with col2:
+
+        if st.button("💻 Learn Python"):
+            st.session_state.messages = [
+                {
+                    "role": "user",
+                    "content": "Teach me Python loops with examples."
+                }
+            ]
+            st.rerun()
+
+        if st.button("🧪 Explain Photosynthesis"):
+            st.session_state.messages = [
+                {
+                    "role": "user",
+                    "content": "Explain photosynthesis for Class 8 students."
+                }
+            ]
+            st.rerun()
+
+    st.caption(
+        f"💬 Messages in this conversation: {len(st.session_state.messages)}"
+    )
+
     # Display previous messages
     for message in st.session_state.messages:
 
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-
-    # User input
+    # Chat input
     prompt = st.chat_input(
-        "Ask your study question here..."
+        "💬 Ask anything about studies..."
     )
 
-
-    # When user sends a message
     if prompt:
 
         # Show user message
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Save user message
         st.session_state.messages.append(
             {
                 "role": "user",
@@ -223,30 +360,48 @@ Your chat history will remain available during your session.
             }
         )
 
-
         # Generate AI response
         with st.chat_message("assistant"):
 
-            with st.spinner(
-                "🧠 FUTUREMIND AI is thinking..."
-            ):
+            with st.spinner("🧠 FUTUREMIND AI is thinking..."):
 
-                answer = get_ai_response(st.session_state.messages)
+                answer = get_ai_response(
+                    st.session_state.messages
+                )
+
+                # Increment analytics
                 increment_counter("tutor")
+
                 st.markdown(answer)
+
                 pdf_file = create_pdf(
                     "FUTUREMIND AI Study Tutor",
                     answer
                 )
 
-                st.download_button(
-                    "📄 Download PDF",
-                    data=pdf_file,
-                    file_name="study_answer.pdf",
-                    mime="application/pdf"
-                )
+                col1, col2 = st.columns(2)
 
-        # Save AI response
+                with col1:
+
+                    st.download_button(
+                        "💾 Download TXT",
+                        data=answer,
+                        file_name="futuremind_answer.txt",
+                        mime="text/plain",
+                        use_container_width=True
+                    )
+
+                with col2:
+
+                    st.download_button(
+                        "📄 Download PDF",
+                        data=pdf_file,
+                        file_name="study_answer.pdf",
+                        mime="application/pdf",
+                        use_container_width=True
+                    )
+
+        # Save assistant response
         st.session_state.messages.append(
             {
                 "role": "assistant",
@@ -254,14 +409,14 @@ Your chat history will remain available during your session.
             }
         )
 
-
-    # Clear conversation button
     st.markdown("---")
 
-    if st.button("🗑️ Clear Chat"):
+    if st.button(
+        "🗑️ Clear Conversation",
+        use_container_width=True
+    ):
 
         st.session_state.messages = []
-
         st.rerun()
             # ==========================================
 # SMART QUIZ GENERATOR
