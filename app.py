@@ -10,6 +10,9 @@ from utils.analytics import (
     get_analytics
 )
 from utils.study_tips import get_study_tip
+from datetime import datetime
+import plotly.express as px
+import pandas as pd
 
 
 # ==========================================
@@ -117,32 +120,36 @@ st.sidebar.markdown("""
 if "feature" not in st.session_state:
     st.session_state["feature"] = "🏠 Home"
 
+# Sidebar pages
+pages = [
+    "🏠 Home",
+    "📚 AI Study Tutor",
+    "📝 Smart Quiz Generator",
+    "🚀 Career Roadmap",
+    "📊 Skill Gap Analyzer",
+    "🎤 AI Mock Interview",
+    "📊 Analytics Dashboard",
+]
+
+# Initialize selected page
+if "feature" not in st.session_state:
+    st.session_state["feature"] = "🏠 Home"
+
+# Prevent invalid values
+if st.session_state["feature"] not in pages:
+    st.session_state["feature"] = "🏠 Home"
+
+# Sidebar navigation
 feature = st.sidebar.selectbox(
     "🚀 Explore Features",
-    [
-        "🏠 Home",
-        "📚 AI Study Tutor",
-        "📝 Smart Quiz Generator",
-        "🚀 Career Roadmap",
-        "📊 Skill Gap Analyzer",
-        "🎤 AI Mock Interview",
-        "📊 Analytics Dashboard",
-    ],
-    index=[
-        "🏠 Home",
-        "📚 AI Study Tutor",
-        "📝 Smart Quiz Generator",
-        "🚀 Career Roadmap",
-        "📊 Skill Gap Analyzer",
-        "🎤 AI Mock Interview",
-        "📊 Analytics Dashboard",
-    ].index(st.session_state["feature"])
+    pages,
+    index=pages.index(st.session_state["feature"])
 )
 
+# Save current page
 st.session_state["feature"] = feature
 
 st.sidebar.markdown("---")
-
 st.sidebar.success(
     "✨ Learn • Practice • Grow"
 )
@@ -158,8 +165,41 @@ Developed with ❤️ by **Sristi**
 # ==========================================
 
 if feature == "🏠 Home":
+    # Current date
+    today = datetime.now().strftime("%d %B %Y")
 
-    st.title("🧠 FUTUREMIND AI")
+    # Welcome banner
+    st.markdown(f"""
+    <div style="
+    background: linear-gradient(90deg,#4F46E5,#7C3AED);
+    padding:20px;
+    border-radius:15px;
+    color:white;
+    margin-bottom:20px;
+    ">
+
+    <h1 style="margin:0;">🧠 Welcome to FUTUREMIND AI</h1>
+
+    <p style="font-size:18px;margin-top:8px;">
+    Your Personal AI Study & Career Assistant
+    </p>
+
+    <p style="margin-top:15px;">
+    📅 <b>Date:</b> {today}
+    </p>
+
+    <p>
+    🚀 <b>Version:</b> v1.4
+    </p>
+
+    <p>
+    ✨ <b>Last Updated:</b> June 2026
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    
     data = get_analytics()
 
     st.subheader("Learn Smarter. Plan Better. Grow Faster.")
@@ -227,11 +267,13 @@ Your personal AI-powered study and career assistant designed to help students le
             st.rerun()
 
         if st.button("📈 Open Analytics", use_container_width=True):
-            st.session_state["feature"] = "📈 Analytics Dashboard"
+            st.session_state["feature"] = "📊 Analytics Dashboard"
             st.rerun()
     st.markdown("---")
 
     import random
+
+    st.success("💡 Today's AI Study Tip")
 
     st.info(get_study_tip())
     st.markdown("---")
@@ -893,7 +935,47 @@ elif feature == "📊 Analytics Dashboard":
         )
 
     st.markdown("---")
+    st.markdown("---")
 
+    st.subheader("📈 Feature Usage Overview")
+
+    chart_data = pd.DataFrame({
+        "Feature": [
+            "Tutor",
+            "Quiz",
+            "Roadmap",
+            "Skill Gap",
+            "Interview"
+        ],
+        "Uses": [
+            data["tutor"],
+            data["quiz"],
+            data["roadmap"],
+            data["skill_gap"],
+            data["interview"]
+        ]
+    })
+
+    fig = px.bar(
+        chart_data,
+        x="Feature",
+        y="Uses",
+        text="Uses",
+        title="Feature Usage Statistics"
+    )
+
+    fig.update_layout(
+        xaxis_title="Features",
+        yaxis_title="Number of Uses"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+    st.markdown("---")
+
+    st.subheader("🏆 Dashboard Summary")
     total = (
         data["tutor"]
         + data["quiz"]
@@ -901,6 +983,59 @@ elif feature == "📊 Analytics Dashboard":
         + data["skill_gap"]
         + data["interview"]
     )
+
+    most_used = chart_data.loc[
+        chart_data["Uses"].idxmax()
+    ]
+
+    st.success(
+        f"⭐ Most Used Feature: **{most_used['Feature']}** ({most_used['Uses']} uses)"
+    )
+
+    st.info(
+        f"🤖 Total AI Interactions: **{chart_data['Uses'].sum()}**"
+    )
+    total = chart_data["Uses"].sum()
+
+    st.markdown("### 🎯 Overall Usage Progress")
+
+    goal = 100
+
+    progress = min(total / goal, 1.0)
+
+    st.progress(progress)
+
+    st.caption(f"{total} / {goal} AI interactions completed")
+
+    st.markdown("---")
+    st.subheader("🏅 Achievements")
+
+    if total >= 10:
+        st.success("🥉 Beginner Explorer")
+
+    if total >= 25:
+        st.success("🥈 AI Learner")
+
+    if total >= 50:
+        st.success("🥇 FUTUREMIND Expert")
+
+    if total >= 100:
+        st.success("👑 FUTUREMIND Master")
+
+    least_used = chart_data.loc[
+        chart_data["Uses"].idxmin()
+    ]
+
+    st.info(
+        f"📌 Try exploring **{least_used['Feature']}** more."
+    )
+
+    st.markdown("---")
+
+    st.caption("🧠 FUTUREMIND AI Analytics Dashboard")
+
+    st.caption("Statistics update automatically as you interact with the application.")
+
 
     st.success(
         f"🚀 Total AI Tasks Generated: {total}"
