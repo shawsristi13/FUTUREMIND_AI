@@ -195,7 +195,7 @@ Your personal AI-powered study and career assistant designed to help students le
     """
     ## 🚀 Begin Your Journey
 
-    Choose any feature from the sidebar and start learning with AI.
+    Choose any feature and start learning with AI.
         """
     )
     st.markdown("---")
