@@ -262,11 +262,7 @@ Your personal AI-powered study and career assistant designed to help students le
     """
     )
 
-    st.caption("🧠 FUTUREMIND AI v1.3")
-
-    st.caption("Learn Smarter • Plan Better • Grow Faster")
-
-    st.caption("Developed with ❤️ by Sristi")
+    
 
 # ==========================================
 # AI STUDY TUTOR
