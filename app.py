@@ -210,26 +210,7 @@ Your personal AI-powered study and career assistant designed to help students le
 
     st.markdown("---")
 
-    st.subheader("📈 FUTUREMIND AI Statistics")
 
-    analytics = get_analytics()
-
-    col1, col2, col3, col4, col5 = st.columns(5)
-
-    with col1:
-        st.metric("📚 Tutor", analytics["tutor"])
-
-    with col2:
-        st.metric("📝 Quizzes", analytics["quiz"])
-
-    with col3:
-        st.metric("🚀 Roadmaps", analytics["roadmap"])
-
-    with col4:
-        st.metric("📊 Skills", analytics["skill_gap"])
-
-    with col5:
-        st.metric("🎤 Interviews", analytics["interview"])
 
     st.markdown(
     """
