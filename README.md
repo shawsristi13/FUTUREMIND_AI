@@ -1,4 +1,28 @@
-# 🧠 FUTUREMIND AI
+<p align="center">
+  <img src="banner.png" alt="FUTUREMIND AI Banner" width="100%">
+</p>
+
+<h1 align="center">🧠 FUTUREMIND AI</h1>
+
+<p align="center">
+An AI-Powered Study & Career Assistant
+</p>
+
+<p align="center">
+
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+
+![Streamlit](https://img.shields.io/badge/Streamlit-Framework-red?logo=streamlit)
+
+![Generative AI](https://img.shields.io/badge/Generative-AI-green)
+
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
+</p>
+
+## 🌐 Live Demo
+
+👉 **[Try FUTUREMIND AI](https://futuremindai-nhw6kdehygcwx8jsai3rct.streamlit.app/)**
 
 An AI-powered Study & Career Assistant designed to help students learn smarter, practice effectively, and prepare for their future.
 
