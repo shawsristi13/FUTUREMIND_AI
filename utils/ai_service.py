@@ -18,7 +18,6 @@ def get_ai_response(prompt):
         "Content-Type": "application/json"
     }
 
-    # Supports normal prompts and chat history
     if isinstance(prompt, list):
         messages = prompt
     else:
@@ -32,8 +31,8 @@ def get_ai_response(prompt):
     data = {
         "model": "openai/gpt-3.5-turbo",
         "messages": messages,
-        "temperature": 0.7,
-        "max_tokens": 800
+        "temperature": 0.5,
+        "max_tokens": 2000
     }
 
     try:
@@ -41,7 +40,7 @@ def get_ai_response(prompt):
             url,
             headers=headers,
             json=data,
-            timeout=30
+            timeout=60
         )
 
         response.raise_for_status()
